@@ -4,6 +4,8 @@ import 'package:dpbankmerchant/Layout/Drawer/darwer.dart';
 import 'package:dpbankmerchant/Theme/Colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mnc_identifier_face/mnc_identifier_face.dart';
+import 'package:mnc_identifier_face/model/liveness_detection_result_model.dart';
 
 class SecondScreen extends StatefulWidget {
   @override
@@ -37,8 +39,65 @@ class _SecondScreenState extends State<SecondScreen> {
         ],
       ),
       body:Center(
+          child:Column(
+            children: [
+              RawMaterialButton(
+                onPressed: (){
+                  //Navigator.of(context).push(MaterialPageRoute(builder:(context)=>FlutterDemo(storage: CounterStorage())));
+                  Navigator.of(context).push(MaterialPageRoute(builder:(context)=>MyApp()));
+                },
+                child:Text("Hello"),
+              ),
+            ],
+          )
+      ),
+    );
+  }
+}
 
-          child:Text("Home page")
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  LivenessDetectionResult? livenessResult;
+  final _mncIdentifierFacePlugin = MncIdentifierFace();
+  Future<void> startDetection() async {
+    try {
+      LivenessDetectionResult livenessResult = await MncIdentifierFace().startLivenessDetection();
+      debugPrint("result is $livenessResult");
+      print('Hello');
+    } catch (e) {
+      debugPrint('Something goes unexpected with error is $e');
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Liveness Identifier Example'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(livenessResult?.toJson().toString() ?? "Data still empty"),
+              ElevatedButton(
+                onPressed: () {
+                  startDetection();
+                //  livenessResult = await _mncIdentifierFacePlugin.startLivenessDetection();
+                  setState(() {});
+                },
+                child: const Text("START LIVENESS IDENTIFIER"),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

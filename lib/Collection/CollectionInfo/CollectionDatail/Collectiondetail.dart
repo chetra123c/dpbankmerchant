@@ -5,6 +5,7 @@ import 'package:dpbankmerchant/Collection/Radio/RadoiFun.dart';
 import 'package:dpbankmerchant/Collection/ThemeCollection/color.dart';
 import 'package:dpbankmerchant/Collection/ThemeCollection/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class totalOverdueLoan extends StatefulWidget {
   const totalOverdueLoan({Key? key}) : super(key: key);
@@ -16,7 +17,9 @@ class totalOverdueLoan extends StatefulWidget {
 class _totalOverdueLoanState extends State<totalOverdueLoan> {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: appbarColor,
        // leading: leadingAppbar(context),
